@@ -1,0 +1,56 @@
+# =========================================
+# Unity Generated Folders
+# =========================================
+
+Library/
+Temp/
+Logs/
+obj/
+Build/
+Builds/
+UserSettings/
+.vs/
+
+# Visual Studio
+*.csproj
+*.sln
+*.suo
+*.tmp
+
+# =========================================
+# Ignore Everything Inside Assets
+# =========================================
+
+Assets/*
+
+# =========================================
+# Allow Selected Folders
+# =========================================
+
+!Assets/SCRIPTS/
+!Assets/SCRIPTS/**
+
+!Assets/Scenes/
+!Assets/Scenes/**
+
+!Assets/PREFAB/
+!Assets/PREFAB/**
+
+!Assets/Animations/
+!Assets/Animations/**
+
+!Assets/Character Models/
+!Assets/Character Models/**
+
+# =========================================
+# Keep ALL Unity Meta Files
+# =========================================
+
+!Assets/**/*.meta
+
+# =========================================
+# Keep Important Root Unity Files
+# =========================================
+
+!Assets/DefaultNetworkPrefabs.asset
+!Assets/DefaultNetworkPrefabs.asset.meta
