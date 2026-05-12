@@ -10,16 +10,11 @@ public class HomeMenu : MonoBehaviour
     [SerializeField] private Button changeCharacter;
     [SerializeField] private GameObject characterPanel;
     [SerializeField] private Button characterPanelExit;
-
-    [SerializeField] private GameObject[] characterModels;
     [SerializeField] private Button[] changeModelsButton;
-    private GameObject currentCharacter;
 
     private void Start()
     {
-        currentCharacter = Instantiate(characterModels[0]);
         characterPanel.SetActive(false);
-        CharacterAnimation.Instance.ActivateLobbyAnimation();
     }
     private void Awake()
     {
@@ -53,24 +48,9 @@ public class HomeMenu : MonoBehaviour
         for (int i = 0; i < changeModelsButton.Length; i++)
         {
             int index = i;
-            changeModelsButton[i].onClick.AddListener(() => SelectCharacter(index));
+            changeModelsButton[i].onClick.AddListener(() => SwitchCharacter.Instance.SelectCharacter(index));
         }
 
     }
-    private void SelectCharacter(int index)
-    {
-        Animator oldAnimator = currentCharacter.GetComponent<Animator>();
-        AnimatorStateInfo currentState = oldAnimator.GetCurrentAnimatorStateInfo(0);
-        float currentTime = currentState.normalizedTime % 1f;
-        string stateName = currentState.IsName("ArmStrech") ? "ArmStrech" : currentState.shortNameHash.ToString();
 
-        if (currentCharacter != null)
-        {
-            Destroy(currentCharacter);
-        }
-        currentCharacter = Instantiate(characterModels[index]);
-
-        Animator newAnimator = currentCharacter.GetComponent<Animator>();
-        newAnimator.Play(stateName, 0, currentTime);
-    }
 }

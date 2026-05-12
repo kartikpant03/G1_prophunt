@@ -4,7 +4,7 @@ using Unity.Netcode;
 public class CharacterAnimation : NetworkBehaviour
 {
     public static CharacterAnimation Instance { get; private set; }
-    private Animator animator;
+    [SerializeField] private Animator animator;
 
     public void ActivateLobbyAnimation()
     {
@@ -20,15 +20,18 @@ public class CharacterAnimation : NetworkBehaviour
     }
     private void Start()
     {
+        ActivateLobbyAnimation();
+
         if (IsOwner)
         {
             SetLayer(gameObject, LayerMask.NameToLayer("LocalPlayer"));
-            animator = GetComponent<Animator>();
+
         }
     }
     private void Update()
     {
         if (!IsOwner) return;
+        if (animator.GetLayerWeight(2) == 0f) return;
 
         float speed = 0f;
         float strafe = 0f;

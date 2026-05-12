@@ -1435,6 +1435,7 @@ GameObject:
   - component: {fileID: 6422398910380345390}
   - component: {fileID: 8599401030079179052}
   - component: {fileID: 563968460664300460}
+  - component: {fileID: 5772422301185288614}
   m_Layer: 0
   m_Name: Character Model
   m_TagString: Untagged
@@ -1513,6 +1514,26 @@ MonoBehaviour:
   AnimatorParameterEntries:
     ParameterEntries: []
   AnimatorParametersExpanded: 0
+--- !u!114 &5772422301185288614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5134133544223845941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9770a33efdfe43040b8126545a41bb2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  characterModels:
+  - {fileID: 2933725963174567454, guid: 48839a857cbdc2b41ab8fb4431c90310, type: 3}
+  - {fileID: 2969072793986692835, guid: 7bf5e1bbed15e7946bb5feda50a1c00d, type: 3}
+  - {fileID: 3398072848910143868, guid: 95c646717214fce479f524a7eb743dde, type: 3}
+  - {fileID: 8671182580309005577, guid: c61f5b23e11143e4e85fcb6a73dc5bb1, type: 3}
+  - {fileID: 8837876776494490589, guid: f591a70ec142a3e4e87149ce85b03226, type: 3}
+  characterParent: {fileID: 8277058096632742449}
+  currentCharacter: {fileID: 5130246548257444297}
 --- !u!1 &5326640875992477406
 GameObject:
   m_ObjectHideFlags: 0
