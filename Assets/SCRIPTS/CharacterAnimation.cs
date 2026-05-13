@@ -1,10 +1,11 @@
 using UnityEngine;
 using Unity.Netcode;
+using Unity.VisualScripting;
 
 public class CharacterAnimation : NetworkBehaviour
 {
     public static CharacterAnimation Instance { get; private set; }
-    [SerializeField] private Animator animator;
+    public Animator animator;
 
     public void ActivateLobbyAnimation()
     {
@@ -17,6 +18,16 @@ public class CharacterAnimation : NetworkBehaviour
         animator.SetLayerWeight(0, 0f);
         animator.SetLayerWeight(1, 0f);
         animator.SetLayerWeight(2, 1f);
+    }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
     }
     private void Start()
     {

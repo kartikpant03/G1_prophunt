@@ -16,7 +16,7 @@ public class CreateLobby : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)  // FOR CLEAN UP:
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
@@ -25,19 +25,19 @@ public class CreateLobby : MonoBehaviour
         Instance = this;
         gameObject.SetActive(false);
 
-        exitLobbyButton.onClick.AddListener(() =>                                       // EXIT TO MAIN MENU
+        exitLobbyButton.onClick.AddListener(() =>
         {
             gameObject.SetActive(false);
             MainLobby.Instance.gameObject.SetActive(true);
         });
-        createPublic.onClick.AddListener(() =>                                          // CREATE PUBLIC LOBBY
+        createPublic.onClick.AddListener(() =>
         {
             maxPlayers = int.Parse(maxPeople.text);
             SceneLoader.Load(SceneLoader.Scene.MultiplayerScene);
             LobbySettings.Instance.CreateNewLobby(lobbyName.text, false);
             gameObject.SetActive(false);
         });
-        createPrivate.onClick.AddListener(() =>                                         // CREATE PRIVATE LOBBY
+        createPrivate.onClick.AddListener(() =>
         {
             maxPlayers = int.Parse(maxPeople.text);
             SceneLoader.Load(SceneLoader.Scene.MultiplayerScene);

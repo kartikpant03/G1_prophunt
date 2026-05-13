@@ -41,7 +41,7 @@ public class MultiplayerMovement : NetworkBehaviour
             if (isCursorLocked)
             {
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-                    MovePlayer();       // Movement of Player (currently client sided not from server)
+                    MovePlayer();       // Movement of Player (currently client sided)
                 CameraMove();
             }
 
