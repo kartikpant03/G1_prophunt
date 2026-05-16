@@ -15,7 +15,8 @@ using UnityEngine.SceneManagement;
 public class LobbySettings : MonoBehaviour
 {
     public static LobbySettings Instance { get; private set; }
-    private const string Relay_JoinCode_Key = "RelayJoinCOde";
+    private const string Relay_JoinCode_Key = "RelayJoinCode";
+    [SerializeField] private MultiplayerMovement movementScript;
 
     public event EventHandler CreateLobbyFailed;
     public event EventHandler QuickJoinLobbyFailed;
@@ -264,16 +265,15 @@ public class LobbySettings : MonoBehaviour
 
     private async void StartHost()
     {
-        string enteredName = MainLobby.Instance.clientName.text;
-        PlayerPrefs.SetString("PlayerName", enteredName);
-        PlayerPrefs.Save();
-
-        await VivoxChat.Instance.LeaveVivoxRoom(joinedLobby.Name);
+        await VivoxChat.Instance.JoinVivoxRoom(joinedLobby.Name);
         VivoxChat.Instance.currentRoomName = "Lobby";
 
         NetworkManager.Singleton.StartHost();
         SceneLoader.LoadNetwork(SceneLoader.Scene.MultiplayerScene);
+
+        movementScript.enabled = true;
         CharacterAnimation.Instance.ActivateMovementAnimation();
+        
     }
     private async void StopHost()
     {
@@ -282,25 +282,22 @@ public class LobbySettings : MonoBehaviour
             NetworkManager.Singleton.Shutdown();
 
             SceneLoader.Load(SceneLoader.Scene.LobbyScene);
+            movementScript.enabled = false;
             CharacterAnimation.Instance.ActivateLobbyAnimation();
 
             await VivoxChat.Instance.LeaveVivoxRoom(joinedLobby.Name);
             VivoxChat.Instance.currentRoomName = "Lobby";
-            CharacterAnimation.Instance.ActivateLobbyAnimation();
         }
     }
     private async void StartClient()
     {
-
-        string enteredName = MainLobby.Instance.clientName.text;
-        PlayerPrefs.SetString("PlayerName", enteredName);
-        PlayerPrefs.Save();
-
         VivoxChat.Instance.currentRoomName = joinedLobby.Name;
         await VivoxChat.Instance.JoinVivoxRoom(joinedLobby.Name);
 
         NetworkManager.Singleton.StartClient();
-        CharacterAnimation.Instance.ActivateMovementAnimation();
+
+        movementScript.enabled = true;
+        CharacterAnimation.Instance.ActivateMovementAnimation();  
     }
     public async void StopClient()
     {
@@ -313,6 +310,8 @@ public class LobbySettings : MonoBehaviour
         if (NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsHost)
         {
             NetworkManager.Singleton.Shutdown();
+
+            movementScript.enabled = false;
             CharacterAnimation.Instance.ActivateLobbyAnimation();
         }
     }
@@ -326,6 +325,9 @@ public class LobbySettings : MonoBehaviour
             VivoxChat.Instance.currentRoomName = "Lobby";
 
             SceneLoader.SceneLoaderCallback();
+
+            movementScript.enabled = false;
+            CharacterAnimation.Instance.ActivateLobbyAnimation();
         }
     }
 }

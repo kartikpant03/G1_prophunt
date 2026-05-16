@@ -2202,6 +2202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1349293679060088789}
   - component: {fileID: -1552837556793707839}
+  - component: {fileID: -4534007770483500973}
   m_Layer: 0
   m_Name: Character 5
   m_TagString: Untagged
@@ -2248,6 +2249,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-4534007770483500973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8837876776494490589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkAnimator
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkAnimatorExpanded: 0
+  AuthorityMode: 0
+  m_Animator: {fileID: -1552837556793707839}
+  TransitionStateInfoList: []
+  AnimatorParameterEntries:
+    ParameterEntries:
+    - name: Move
+      NameHash: 1326225478
+      Synchronize: 1
+      ParameterType: 1
+    - name: Strafe
+      NameHash: -1311372029
+      Synchronize: 1
+      ParameterType: 1
+  AnimatorParametersExpanded: 0
 --- !u!1 &9002791815922195668
 GameObject:
   m_ObjectHideFlags: 0

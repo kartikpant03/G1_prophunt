@@ -1,14 +1,15 @@
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.InputSystem;
 
 public class MultiplayerMovement : NetworkBehaviour
 {
     [SerializeField] private GameObject player;
-    [SerializeField] private GameObject playerModel;
     [SerializeField] private GameObject playerCamera;
     private CharacterController controller;
     private const float stickDistance = 2f;
     private const float offsetAboveGround = 1.5f;
+    private InputSystem_Actions inputActions;
 
     [Header("Sensitivity Settings")]
     [SerializeField] private float xSensitivity = 100f;
@@ -21,6 +22,8 @@ public class MultiplayerMovement : NetworkBehaviour
     private float xRotation = 0f;
     private float yRotation = 0f;
     private bool isCursorLocked = true;
+    private Vector2 moveInput;
+    private Vector2 lookInput;
 
     private void Start()
     {
@@ -31,21 +34,33 @@ public class MultiplayerMovement : NetworkBehaviour
             return;
         }
         controller = GetComponent<CharacterController>();
-        LockCursor();
     }
-
+    private void Awake()
+    {
+        inputActions = new InputSystem_Actions();
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
+    }
     private void Update()
     {
         if (IsOwner)
         {
             if (isCursorLocked)
             {
-                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-                    MovePlayer();       // Movement of Player (currently client sided)
-                CameraMove();
+                moveInput = inputActions.Player.Move.ReadValue<Vector2>();
+                lookInput = inputActions.Player.Look.ReadValue<Vector2>();
+
+                PLayerMovement();       // (currently client sided)
+                CameraMovement();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
             {
                 if (isCursorLocked)
                 {
@@ -70,6 +85,13 @@ public class MultiplayerMovement : NetworkBehaviour
             }
         }
     }
+    public void EnableFPPCamera(bool value)
+    {
+        foreach (Transform obj in player.GetComponentsInChildren<Transform>(true))
+        {
+            obj.gameObject.SetActive(true);
+        }
+    }
     private void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -82,10 +104,11 @@ public class MultiplayerMovement : NetworkBehaviour
         Cursor.visible = true;
         isCursorLocked = false;
     }
-    private void CameraMove()
+
+    private void CameraMovement()
     {
-        float mouseX = Input.GetAxis("Mouse X") * xSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * ySensitivity * Time.deltaTime;
+        float mouseX = lookInput.x * xSensitivity * Time.deltaTime;
+        float mouseY = lookInput.y * ySensitivity * Time.deltaTime;
 
         xRotation -= mouseY;
         yRotation += mouseX;
@@ -94,16 +117,13 @@ public class MultiplayerMovement : NetworkBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         player.transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
     }
-    private void MovePlayer()       // Local movement of player
+    private void PLayerMovement()       // Local movement of player
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-
-        Vector3 moveDirection = (transform.forward * moveZ + transform.right * moveX).normalized;
+        Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x).normalized;
         moveDirection.y = 0f;
         Vector3 velocity;
 
-        velocity = moveDirection * (Input.GetKey(KeyCode.LeftShift) ? walkSpeed : runSpeed);
+        velocity = moveDirection * (inputActions.Player.Sprint.IsPressed() ? walkSpeed : runSpeed);
         controller.Move(velocity * Time.deltaTime);
     }
     private void MovePlayerServerAuth()  // Server Movement of Player
@@ -112,7 +132,7 @@ public class MultiplayerMovement : NetworkBehaviour
         float moveZ = Input.GetAxis("Vertical");
         MovePlayerServerRpc(moveX, moveZ);
     }
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void MovePlayerServerRpc(float moveX, float moveZ)
     {
         Vector3 moveDirection = (playerCamera.transform.forward * moveZ + playerCamera.transform.right * moveX).normalized;

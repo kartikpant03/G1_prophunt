@@ -24,7 +24,7 @@ public class PlayerNameSync : NetworkBehaviour
     {
         nameText.text = newValue.ToString();
     }
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     void SetPlayerNameServerRpc(string name)
     {
         playerName.Value = name;

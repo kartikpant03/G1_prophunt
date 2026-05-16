@@ -5,6 +5,7 @@ public class HomeMenu : MonoBehaviour
 {
     public static HomeMenu Instance { get; private set; }
 
+    [SerializeField] private MultiplayerMovement movementScript;
     [SerializeField] private Button playGame;
     [SerializeField] private Button quitGame;
     [SerializeField] private Button changeCharacter;
@@ -25,6 +26,7 @@ public class HomeMenu : MonoBehaviour
         }
 
         Instance = this;
+        movementScript.enabled = false;
 
         playGame.onClick.AddListener(() =>
         {

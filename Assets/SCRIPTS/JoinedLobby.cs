@@ -3,6 +3,7 @@ using TMPro;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Vivox;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class JoinedLobby : MonoBehaviour
@@ -58,7 +59,7 @@ public class JoinedLobby : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Keyboard.current.escapeKey.isPressed)
         {
             menuEnabled = !menuEnabled;
             if (menuEnabled)
@@ -70,7 +71,7 @@ public class JoinedLobby : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
-        if (Input.GetKeyDown(KeyCode.M) && VivoxChat.Instance != null)
+        if (Keyboard.current.mKey.isPressed && VivoxChat.Instance != null)
         {
             VivoxChat.Instance.MuteLocalMic();
         }   

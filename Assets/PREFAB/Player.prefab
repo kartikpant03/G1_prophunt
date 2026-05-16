@@ -255,9 +255,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8277058096632742449}
   - component: {fileID: 8599401030079179052}
-  - component: {fileID: 563968460664300460}
   - component: {fileID: 5772422301185288614}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Character Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -293,26 +292,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterAnimation
   ShowTopMostFoldoutHeaderGroup: 1
   animator: {fileID: 0}
---- !u!114 &563968460664300460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5134133544223845941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58e343fb954930e4697a6fda6ba1481a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OwnerNetworkAnimator
-  ShowTopMostFoldoutHeaderGroup: 1
-  NetworkAnimatorExpanded: 0
-  AuthorityMode: 0
-  m_Animator: {fileID: 0}
-  TransitionStateInfoList: []
-  AnimatorParameterEntries:
-    ParameterEntries: []
-  AnimatorParametersExpanded: 0
 --- !u!114 &5772422301185288614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,14 +478,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7064752539790013359}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6121269130367994185}
   m_Father: {fileID: 6339179986928347964}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.25}
@@ -654,9 +633,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7644675962456973430}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.9647873, z: 0, w: 0.2630313}
-  m_LocalPosition: {x: 0.365, y: 0, z: 0.279}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 109.68, y: 13, z: 117.965}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1842133024383414335}
@@ -704,7 +683,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   player: {fileID: 7644675962456973430}
-  playerModel: {fileID: 0}
   playerCamera: {fileID: 4351300045595046221}
   xSensitivity: 100
   ySensitivity: 100

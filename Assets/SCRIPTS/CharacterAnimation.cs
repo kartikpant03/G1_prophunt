@@ -1,10 +1,11 @@
 using UnityEngine;
 using Unity.Netcode;
-using Unity.VisualScripting;
+using UnityEngine.InputSystem;
 
 public class CharacterAnimation : NetworkBehaviour
 {
     public static CharacterAnimation Instance { get; private set; }
+    private InputSystem_Actions inputActions;
     public Animator animator;
 
     public void ActivateLobbyAnimation()
@@ -28,11 +29,10 @@ public class CharacterAnimation : NetworkBehaviour
         }
 
         Instance = this;
+        inputActions = new InputSystem_Actions();
     }
     private void Start()
     {
-        ActivateLobbyAnimation();
-
         if (IsOwner)
         {
             SetLayer(gameObject, LayerMask.NameToLayer("LocalPlayer"));
@@ -42,37 +42,18 @@ public class CharacterAnimation : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
-        if (animator.GetLayerWeight(2) == 0f) return;
 
-        float speed = 0f;
-        float strafe = 0f;
+        Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
+
+        float speed = moveInput.y * 2f;
+        float strafe = moveInput.x * 2f;
         float currentSpeed;
         float currentStrafe;
-
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
-            strafe = 0f;
-
-        else if (Input.GetKey(KeyCode.A))
-            strafe = Input.GetKey(KeyCode.LeftShift) ? -2f : -1f;
-
-        else if (Input.GetKey(KeyCode.D))
-            strafe = Input.GetKey(KeyCode.LeftShift) ? 2f : 1f;
-
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
-            speed = 0f;
-
-        else if (Input.GetKey(KeyCode.W))
-            speed = Input.GetKey(KeyCode.LeftShift) ? 2f : 1f;
-
-        else if (Input.GetKey(KeyCode.S))
+        
+        if (inputActions.Player.Sprint.IsPressed())
         {
-            speed = Input.GetKey(KeyCode.LeftShift) ? -2f : -1f;
-
-            if (Input.GetKey(KeyCode.A))
-                strafe = Input.GetKey(KeyCode.LeftShift) ? 2f : 1f;
-
-            if (Input.GetKey(KeyCode.D))
-                strafe = Input.GetKey(KeyCode.LeftShift) ? -2f : -1f;
+            speed = speed / 2;
+            strafe = strafe / 2;
         }
 
         currentSpeed = animator.GetFloat("Move");

@@ -23,11 +23,12 @@ public class SwitchCharacter : MonoBehaviour
     {
         currentCharacter = Instantiate(characterModels[0], characterParent);
         CharacterAnimation.Instance.animator = currentCharacter.GetComponent<Animator>();
+        CharacterAnimation.Instance.ActivateLobbyAnimation();
     }
     public void SelectCharacter(int index)
     {
         Animator oldAnimator = currentCharacter.GetComponent<Animator>();
-        AnimatorStateInfo currentState = oldAnimator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo currentState = oldAnimator.GetCurrentAnimatorStateInfo(1);
         float currentTime = currentState.normalizedTime % 1f;
         string stateName = "ArmStrech";
 

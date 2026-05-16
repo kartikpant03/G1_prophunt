@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 2d928ee3684d8904baca0310bc5d3ce2
 ModelImporter:
-  serializedVersion: 22200
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -23,9 +23,9 @@ ModelImporter:
     importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 1
-    animationRotationError: 0.5
+    animationRotationError: 0.1
     animationPositionError: 0
-    animationScaleError: 0.5
+    animationScaleError: 0.1
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
@@ -85,6 +85,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

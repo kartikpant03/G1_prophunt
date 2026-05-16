@@ -8,6 +8,7 @@ public class MainLobby : MonoBehaviour
 {
     public static MainLobby Instance { get; private set; }
 
+    [SerializeField] private int maxFPS = 144;
     [SerializeField] private Button createLobby;
     [SerializeField] private Button quickJoin;
     [SerializeField] private Button joinCode;
@@ -16,6 +17,7 @@ public class MainLobby : MonoBehaviour
     public TMP_InputField clientName;
     [SerializeField] private Transform lobbyContainer;
     [SerializeField] private Transform lobbyTemplate;
+    [SerializeField] private TextMeshProUGUI clientNameLobby;
 
     private void Awake()
     {
@@ -27,6 +29,11 @@ public class MainLobby : MonoBehaviour
 
         Instance = this;
         gameObject.SetActive(false);
+
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = maxFPS;
+
+        clientName.onValueChanged.AddListener(UpdatePlayerNamePreview);
 
         createLobby.onClick.AddListener(() =>
         {
@@ -74,6 +81,13 @@ public class MainLobby : MonoBehaviour
             lobbyTransform.gameObject.SetActive(true);
             lobbyTransform.GetComponent<LobbyListJoin>().SetLobby(lobby);
         }
+    }
+    private void UpdatePlayerNamePreview(string newName)
+    {
+        clientNameLobby.text = newName;
+
+        PlayerPrefs.SetString("PlayerName", newName);
+        PlayerPrefs.Save();
     }
     private void OnDestroy()
     {
