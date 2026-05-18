@@ -1,24 +1,24 @@
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class CharacterAnimation : NetworkBehaviour
 {
     public static CharacterAnimation Instance { get; private set; }
+
     private InputSystem_Actions inputActions;
     public Animator animator;
 
     public void ActivateLobbyAnimation()
     {
-        animator.SetLayerWeight(0, 0f);
-        animator.SetLayerWeight(1, 1f);
-        animator.SetLayerWeight(2, 0f);
+        animator.SetLayerWeight(0, 1f);
+        animator.SetLayerWeight(1, 0f);
     }
     public void ActivateMovementAnimation()
     {
         animator.SetLayerWeight(0, 0f);
-        animator.SetLayerWeight(1, 0f);
-        animator.SetLayerWeight(2, 1f);
+        animator.SetLayerWeight(1, 1f);
     }
     private void Awake()
     {
@@ -31,12 +31,21 @@ public class CharacterAnimation : NetworkBehaviour
         Instance = this;
         inputActions = new InputSystem_Actions();
     }
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner)
+            inputActions.Enable();
+    }
+    public override void OnNetworkDespawn()
+    {
+        if (IsOwner) 
+            inputActions.Disable();
+    }
     private void Start()
     {
         if (IsOwner)
         {
             SetLayer(gameObject, LayerMask.NameToLayer("LocalPlayer"));
-
         }
     }
     private void Update()

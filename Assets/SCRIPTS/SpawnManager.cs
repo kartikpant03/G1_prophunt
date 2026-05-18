@@ -13,7 +13,6 @@ public class SpawnManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        CharacterAnimation.Instance.ActivateMovementAnimation();
     }
     public Transform GetSpawnPoint(int index)
     {

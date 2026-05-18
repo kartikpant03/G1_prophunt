@@ -1,5 +1,7 @@
 using GLTFast.Schema;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SwitchCharacter : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class SwitchCharacter : MonoBehaviour
     [SerializeField] private GameObject[] characterModels;
     [SerializeField] private Transform characterParent;
     public GameObject currentCharacter;
+    private int currentCharacterIndex;
 
 
     private void Awake()
@@ -18,17 +21,27 @@ public class SwitchCharacter : MonoBehaviour
         }
 
         Instance = this;
+        currentCharacterIndex = PlayerPrefs.GetInt("CurrentCharacter", 0);
     }
     private void Start()
     {
-        currentCharacter = Instantiate(characterModels[0], characterParent);
+        currentCharacter = Instantiate(characterModels[currentCharacterIndex], characterParent);
         CharacterAnimation.Instance.animator = currentCharacter.GetComponent<Animator>();
-        CharacterAnimation.Instance.ActivateLobbyAnimation();
+
+        if (SceneManager.GetActiveScene().name == "LobbyScene")
+            CharacterAnimation.Instance.ActivateLobbyAnimation();
+        else
+            CharacterAnimation.Instance.ActivateMovementAnimation();
     }
     public void SelectCharacter(int index)
     {
+        PlayerPrefs.SetInt("CurrentCharacter", index);
+        PlayerPrefs.Save();
+
+        currentCharacterIndex = PlayerPrefs.GetInt("CurrentCharacter", 0);
+
         Animator oldAnimator = currentCharacter.GetComponent<Animator>();
-        AnimatorStateInfo currentState = oldAnimator.GetCurrentAnimatorStateInfo(1);
+        AnimatorStateInfo currentState = oldAnimator.GetCurrentAnimatorStateInfo(0);
         float currentTime = currentState.normalizedTime % 1f;
         string stateName = "ArmStrech";
 
@@ -36,10 +49,10 @@ public class SwitchCharacter : MonoBehaviour
         {
             Destroy(currentCharacter);
         }
-        currentCharacter = Instantiate(characterModels[index], characterParent);
+        currentCharacter = Instantiate(characterModels[currentCharacterIndex], characterParent);
 
         CharacterAnimation.Instance.animator = currentCharacter.GetComponent<Animator>();
         CharacterAnimation.Instance.ActivateLobbyAnimation();
-        currentCharacter.GetComponent<Animator>().Play(stateName, 1, currentTime);
+        currentCharacter.GetComponent<Animator>().Play(stateName, 0, currentTime);
     }
 }

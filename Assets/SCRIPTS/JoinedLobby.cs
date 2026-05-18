@@ -59,7 +59,7 @@ public class JoinedLobby : MonoBehaviour
     }
     private void Update()
     {
-        if (Keyboard.current.escapeKey.isPressed)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             menuEnabled = !menuEnabled;
             if (menuEnabled)

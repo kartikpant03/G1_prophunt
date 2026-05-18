@@ -269,11 +269,7 @@ public class LobbySettings : MonoBehaviour
         VivoxChat.Instance.currentRoomName = "Lobby";
 
         NetworkManager.Singleton.StartHost();
-        SceneLoader.LoadNetwork(SceneLoader.Scene.MultiplayerScene);
-
-        movementScript.enabled = true;
-        CharacterAnimation.Instance.ActivateMovementAnimation();
-        
+        SceneLoader.LoadNetwork(SceneLoader.Scene.MultiplayerScene);    
     }
     private async void StopHost()
     {
@@ -282,8 +278,6 @@ public class LobbySettings : MonoBehaviour
             NetworkManager.Singleton.Shutdown();
 
             SceneLoader.Load(SceneLoader.Scene.LobbyScene);
-            movementScript.enabled = false;
-            CharacterAnimation.Instance.ActivateLobbyAnimation();
 
             await VivoxChat.Instance.LeaveVivoxRoom(joinedLobby.Name);
             VivoxChat.Instance.currentRoomName = "Lobby";
@@ -295,9 +289,6 @@ public class LobbySettings : MonoBehaviour
         await VivoxChat.Instance.JoinVivoxRoom(joinedLobby.Name);
 
         NetworkManager.Singleton.StartClient();
-
-        movementScript.enabled = true;
-        CharacterAnimation.Instance.ActivateMovementAnimation();  
     }
     public async void StopClient()
     {
@@ -310,9 +301,6 @@ public class LobbySettings : MonoBehaviour
         if (NetworkManager.Singleton.IsClient && !NetworkManager.Singleton.IsHost)
         {
             NetworkManager.Singleton.Shutdown();
-
-            movementScript.enabled = false;
-            CharacterAnimation.Instance.ActivateLobbyAnimation();
         }
     }
     private async void OnClientDisconnected(ulong clientId)
@@ -325,9 +313,6 @@ public class LobbySettings : MonoBehaviour
             VivoxChat.Instance.currentRoomName = "Lobby";
 
             SceneLoader.SceneLoaderCallback();
-
-            movementScript.enabled = false;
-            CharacterAnimation.Instance.ActivateLobbyAnimation();
         }
     }
 }

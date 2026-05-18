@@ -684,6 +684,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   player: {fileID: 7644675962456973430}
   playerCamera: {fileID: 4351300045595046221}
+  movementScript: {fileID: 5198549697663621258}
   xSensitivity: 100
   ySensitivity: 100
   runSpeed: 5

@@ -1,11 +1,13 @@
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MultiplayerMovement : NetworkBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject playerCamera;
+    [SerializeField] private MultiplayerMovement movementScript;
     private CharacterController controller;
     private const float stickDistance = 2f;
     private const float offsetAboveGround = 1.5f;
@@ -29,15 +31,23 @@ public class MultiplayerMovement : NetworkBehaviour
     {
         if (!IsOwner)
         {
-            playerCamera.SetActive(false);
-            GetComponentInChildren<AudioListener>().enabled = false;
-            return;
+            if (SceneManager.GetActiveScene().name != "LobbyScene")
+            {
+                playerCamera.SetActive(false);
+                GetComponentInChildren<AudioListener>().enabled = false;
+                return;
+            }
         }
         controller = GetComponent<CharacterController>();
     }
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
+
+        if (SceneManager.GetActiveScene().name == "LobbyScene")
+            movementScript.enabled = false;
+        else
+            movementScript.enabled = true;
     }
     private void OnEnable()
     {
@@ -45,6 +55,7 @@ public class MultiplayerMovement : NetworkBehaviour
     }
     private void OnDisable()
     {
+
         inputActions.Disable();
     }
     private void Update()
