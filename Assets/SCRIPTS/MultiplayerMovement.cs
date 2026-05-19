@@ -1,3 +1,5 @@
+using Unity.AppUI.UI;
+using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,13 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class MultiplayerMovement : NetworkBehaviour
 {
+    [Header("Player References")]
     [SerializeField] private GameObject player;
-    [SerializeField] private GameObject playerCamera;
-    [SerializeField] private MultiplayerMovement movementScript;
-    private CharacterController controller;
-    private const float stickDistance = 2f;
-    private const float offsetAboveGround = 1.5f;
-    private InputSystem_Actions inputActions;
+    [SerializeField] private CinemachineCamera playerFPPCamera;
+    [SerializeField] private CinemachineCamera playerTPPCamera;
 
     [Header("Sensitivity Settings")]
     [SerializeField] private float xSensitivity = 100f;
@@ -21,27 +20,22 @@ public class MultiplayerMovement : NetworkBehaviour
     [SerializeField] private float runSpeed = 5f;
     [SerializeField] private float walkSpeed = 2f;
 
+    private MultiplayerMovement movementScript;
+    private CharacterController controller;
+
+    private const float stickDistance = 2f;
+    private const float offsetAboveGround = 1.5f;
     private float xRotation = 0f;
     private float yRotation = 0f;
     private bool isCursorLocked = true;
+
+    private InputSystem_Actions inputActions;
     private Vector2 moveInput;
     private Vector2 lookInput;
 
-    private void Start()
-    {
-        if (!IsOwner)
-        {
-            if (SceneManager.GetActiveScene().name != "LobbyScene")
-            {
-                playerCamera.SetActive(false);
-                GetComponentInChildren<AudioListener>().enabled = false;
-                return;
-            }
-        }
-        controller = GetComponent<CharacterController>();
-    }
     private void Awake()
     {
+        movementScript = GetComponent<MultiplayerMovement>();
         inputActions = new InputSystem_Actions();
 
         if (SceneManager.GetActiveScene().name == "LobbyScene")
@@ -55,8 +49,21 @@ public class MultiplayerMovement : NetworkBehaviour
     }
     private void OnDisable()
     {
-
         inputActions.Disable();
+    }
+    private void Start()
+    {
+        if (!IsOwner)
+        {
+            if (SceneManager.GetActiveScene().name != "LobbyScene")
+            {
+                playerFPPCamera.enabled = false;
+                playerTPPCamera.enabled = false;
+                GetComponentInChildren<AudioListener>().enabled = false;
+                return;
+            }
+        }
+        controller = GetComponent<CharacterController>();
     }
     private void Update()
     {
@@ -67,7 +74,7 @@ public class MultiplayerMovement : NetworkBehaviour
                 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
                 lookInput = inputActions.Player.Look.ReadValue<Vector2>();
 
-                PLayerMovement();       // (currently client sided)
+                PlayerMovement();       // (currently client sided)
                 CameraMovement();
             }
 
@@ -96,13 +103,6 @@ public class MultiplayerMovement : NetworkBehaviour
             }
         }
     }
-    public void EnableFPPCamera(bool value)
-    {
-        foreach (Transform obj in player.GetComponentsInChildren<Transform>(true))
-        {
-            obj.gameObject.SetActive(true);
-        }
-    }
     private void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -125,10 +125,10 @@ public class MultiplayerMovement : NetworkBehaviour
         yRotation += mouseX;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        playerFPPCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         player.transform.localRotation = Quaternion.Euler(0f, yRotation, 0f);
     }
-    private void PLayerMovement()       // Local movement of player
+    private void PlayerMovement()       // Local movement of player
     {
         Vector3 moveDirection = (transform.forward * moveInput.y + transform.right * moveInput.x).normalized;
         moveDirection.y = 0f;
@@ -146,7 +146,7 @@ public class MultiplayerMovement : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     private void MovePlayerServerRpc(float moveX, float moveZ)
     {
-        Vector3 moveDirection = (playerCamera.transform.forward * moveZ + playerCamera.transform.right * moveX).normalized;
+        Vector3 moveDirection = (Camera.main.transform.forward * moveZ + Camera.main.transform.right * moveX).normalized;
         moveDirection.y = 0f;
         Vector3 velocity;
 

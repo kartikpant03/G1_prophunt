@@ -58,7 +58,10 @@ public class CharacterAnimation : NetworkBehaviour
         float strafe = moveInput.x * 2f;
         float currentSpeed;
         float currentStrafe;
-        
+
+        if (speed == -1f)
+            strafe = -strafe;
+
         if (inputActions.Player.Sprint.IsPressed())
         {
             speed = speed / 2;
