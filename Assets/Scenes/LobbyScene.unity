@@ -3846,16 +3846,96 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1264993832596651315, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: far clip plane
-      value: 5000
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1264993832596651315, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: near clip plane
-      value: 0.1
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 1356825411695793763, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: LensModeOverride.Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: ScanRecursively
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: SuppressInputWhileBlending
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[3].Name
+      value: Look X (Pan)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[4].Name
+      value: Look Y (Tilt)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[0].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[1].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[2].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[3].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[4].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[3].Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[4].Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[3].Input.Gain
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[4].Input.Gain
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[3].Driver.AccelTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[3].Driver.DecelTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[4].Driver.AccelTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[4].Driver.DecelTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[3].Input.InputAction
+      value: 
+      objectReference: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
+    - target: {fileID: 1687984809686622768, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[4].Input.InputAction
+      value: 
+      objectReference: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
     - target: {fileID: 1842133024383414335, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.019443631
@@ -3878,31 +3958,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.00000011920929
+      value: -0.000000059604645
       objectReference: {fileID: 0}
     - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1
+      value: 0.7676504
       objectReference: {fileID: 0}
     - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.5000001
+      value: -1.6670179
       objectReference: {fileID: 0}
     - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -1
+      value: -0.97681123
       objectReference: {fileID: 0}
     - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.21410245
       objectReference: {fileID: 0}
     - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000004443079
+      value: -0.000000019990086
       objectReference: {fileID: 0}
     - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalRotation.z
+      value: -0.0000000012128285
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110679394278063978, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 2331849515456528346, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_IsActive
@@ -3957,21 +4045,9 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5198549697663621258, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5198549697663621258, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: movementScript
       value: 
       objectReference: {fileID: 1669299507}
-    - target: {fileID: 5198549697663621258, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
-      propertyPath: playerFPPCamera
-      value: 
-      objectReference: {fileID: 1669299503}
-    - target: {fileID: 5198549697663621258, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
-      propertyPath: playerTPPCamera
-      value: 
-      objectReference: {fileID: 1669299502}
     - target: {fileID: 5418651649624653135, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -3979,6 +4055,18 @@ PrefabInstance:
     - target: {fileID: 5977885946508011580, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164891192368007858, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[3].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164891192368007858, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: m_ControllerManager.Controllers.Array.data[4].Owner
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6288172183694243490, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: Lens.FarClipPlane
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6339179986928347964, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4028,6 +4116,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7520688459729975570, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1669299501}
     - target: {fileID: 7533567473866681511, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
       propertyPath: CameraSide
       value: 0.5
@@ -4057,41 +4149,16 @@ PrefabInstance:
       value: Prop Model
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 563968460664300460, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7644675962456973430, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1669299508}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
 --- !u!1 &1669299501 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7644675962456973430, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
   m_PrefabInstance: {fileID: 1669299500}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1669299502 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2960840382987084659, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
-  m_PrefabInstance: {fileID: 1669299500}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
---- !u!114 &1669299503 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6288172183694243490, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
-  m_PrefabInstance: {fileID: 1669299500}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1669299507 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5198549697663621258, guid: 34bcfd4b68ec16542a6337fb30da51af, type: 3}
@@ -4103,19 +4170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ea674cc9a9ae0468800348fdc1187a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1669299508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1669299501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f543c19d1fb8ad84eba8e472ee9ac5d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &1713846238
 MonoBehaviour:
   m_ObjectHideFlags: 0

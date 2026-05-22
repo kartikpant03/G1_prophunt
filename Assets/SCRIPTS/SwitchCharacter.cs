@@ -1,5 +1,3 @@
-using GLTFast.Schema;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

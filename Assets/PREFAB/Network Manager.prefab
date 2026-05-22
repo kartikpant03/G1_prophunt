@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1620685456844317791}
   - component: {fileID: 4407208096425822400}
   - component: {fileID: 3930638242128498229}
+  - component: {fileID: 3506743571645168764}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -99,8 +100,29 @@ MonoBehaviour:
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
+    WebSocketPath: /
     ServerListenAddress: 127.0.0.1
+    ClientBindPort: 0
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
     PacketDropRate: 0
+--- !u!114 &3506743571645168764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717468138354046634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89875cdc57c54474a8a74efd9b2a3b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineInputAxisController
+  ScanRecursively: 1
+  SuppressInputWhileBlending: 1
+  IgnoreTimeScale: 0
+  m_ControllerManager:
+    Controllers: []
+  PlayerIndex: -1
+  AutoEnableInputs: 1

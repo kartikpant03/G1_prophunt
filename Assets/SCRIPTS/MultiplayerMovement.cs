@@ -1,4 +1,3 @@
-using Unity.AppUI.UI;
 using Unity.Cinemachine;
 using Unity.Netcode;
 using UnityEngine;
@@ -13,8 +12,8 @@ public class MultiplayerMovement : NetworkBehaviour
     [SerializeField] private CinemachineCamera playerTPPCamera;
 
     [Header("Sensitivity Settings")]
-    [SerializeField] private float xSensitivity = 100f;
-    [SerializeField] private float ySensitivity = 100f;
+    [SerializeField] private float xSensitivity = 10f;
+    [SerializeField] private float ySensitivity = 10f;
 
     [Header("Movement Settings")]
     [SerializeField] private float runSpeed = 5f;
@@ -29,12 +28,13 @@ public class MultiplayerMovement : NetworkBehaviour
     private float yRotation = 0f;
     private bool isCursorLocked = true;
 
+    private CinemachineInputAxisController camController;
     private InputSystem_Actions inputActions;
     private Vector2 moveInput;
     private Vector2 lookInput;
-
+   
     private void Awake()
-    {
+    {        
         movementScript = GetComponent<MultiplayerMovement>();
         inputActions = new InputSystem_Actions();
 
@@ -43,13 +43,15 @@ public class MultiplayerMovement : NetworkBehaviour
         else
             movementScript.enabled = true;
     }
-    private void OnEnable()
+    public override void OnNetworkSpawn()
     {
-        inputActions.Enable();
+        if (IsOwner)
+            inputActions.Enable();
     }
-    private void OnDisable()
+    public override void OnNetworkDespawn()
     {
-        inputActions.Disable();
+        if (IsOwner)
+            inputActions.Disable();
     }
     private void Start()
     {
@@ -64,6 +66,19 @@ public class MultiplayerMovement : NetworkBehaviour
             }
         }
         controller = GetComponent<CharacterController>();
+        camController = playerTPPCamera.GetComponent<CinemachineInputAxisController>();
+        Debug.Log((int)NetworkManager.Singleton.LocalClientId);
+        camController.PlayerIndex = (int)NetworkManager.Singleton.LocalClientId;
+        SetSensitivity();
+
+        foreach (var controller in camController.Controllers)
+        {
+            if (controller.Name == "Look Orbit Y")
+            {
+                Debug.Log("Look Orbit Y found");
+                controller.Input.InputAction = InputActionReference.Create(inputActions.Player.Look);
+            }
+        } 
     }
     private void Update()
     {
@@ -108,14 +123,25 @@ public class MultiplayerMovement : NetworkBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         isCursorLocked = true;
+        inputActions.Enable();
     }
     private void UnlockCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         isCursorLocked = false;
+        inputActions.Disable();
     }
-
+    public void SetSensitivity()
+    {
+        foreach (var controller in camController.Controllers)
+        {
+            if (controller.Name == "Look Orbit Y")
+            {
+                controller.Input.Gain = -ySensitivity;
+            }
+        }
+    }
     private void CameraMovement()
     {
         float mouseX = lookInput.x * xSensitivity * Time.deltaTime;

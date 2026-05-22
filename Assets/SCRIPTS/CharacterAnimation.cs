@@ -1,7 +1,5 @@
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class CharacterAnimation : NetworkBehaviour
 {
@@ -59,7 +57,7 @@ public class CharacterAnimation : NetworkBehaviour
         float currentSpeed;
         float currentStrafe;
 
-        if (speed == -1f)
+        if (speed < 0f)
             strafe = -strafe;
 
         if (inputActions.Player.Sprint.IsPressed())
