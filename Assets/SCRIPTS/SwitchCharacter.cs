@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class SwitchCharacter : MonoBehaviour
 {
     public static SwitchCharacter Instance { get; private set; }
+
     [SerializeField] private GameObject[] characterModels;
     [SerializeField] private Transform characterParent;
     public GameObject characterModel;
@@ -32,7 +33,7 @@ public class SwitchCharacter : MonoBehaviour
     }
     public void SelectCharacter(int index)
     {
-        PlayerPrefs.SetInt("characterModel", index);
+        PlayerPrefs.SetInt("CurrentCharacter", index);
         PlayerPrefs.Save();
 
         currentCharacterIndex = PlayerPrefs.GetInt("CurrentCharacter", 0);

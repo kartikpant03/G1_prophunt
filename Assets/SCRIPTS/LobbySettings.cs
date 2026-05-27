@@ -16,7 +16,6 @@ public class LobbySettings : MonoBehaviour
 {
     public static LobbySettings Instance { get; private set; }
     private const string Relay_JoinCode_Key = "RelayJoinCode";
-    [SerializeField] private MultiplayerMovement movementScript;
 
     public event EventHandler CreateLobbyFailed;
     public event EventHandler QuickJoinLobbyFailed;
@@ -266,7 +265,7 @@ public class LobbySettings : MonoBehaviour
     private async void StartHost()
     {
         await VivoxChat.Instance.JoinVivoxRoom(joinedLobby.Name);
-        VivoxChat.Instance.currentRoomName = "Lobby";
+        VivoxChat.Instance.currentRoomName = joinedLobby.Name;
 
         NetworkManager.Singleton.StartHost();
         SceneLoader.LoadNetwork(SceneLoader.Scene.MultiplayerScene);    

@@ -4,6 +4,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Vivox;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.InputSystem;
 
 public class VivoxChat : MonoBehaviour
 {
@@ -39,13 +40,13 @@ public class VivoxChat : MonoBehaviour
     {
         if (VivoxService.Instance.IsLoggedIn && VivoxService.Instance.ActiveChannels.ContainsKey(currentRoomName))
         {
-            if (Input.GetKeyDown(KeyCode.T) && isMuted == false)
+            if (Keyboard.current.tKey.wasPressedThisFrame && isMuted == false)
             {
                 speakingMic.SetActive(true);
                 VivoxService.Instance.SetChannelTransmissionModeAsync(TransmissionMode.Single, currentRoomName);
             }
 
-            if (Input.GetKeyUp(KeyCode.T) && isMuted == false)
+            if (Keyboard.current.tKey.wasReleasedThisFrame && isMuted == false)
             {
                 speakingMic.SetActive(false);
                 VivoxService.Instance.SetChannelTransmissionModeAsync(TransmissionMode.None);

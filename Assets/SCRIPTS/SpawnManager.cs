@@ -4,17 +4,23 @@ public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager Instance { get; private set;  }
     
-    [SerializeField] private SpawnPoint[] spawnPoints;
+    [SerializeField] private Transform[] spawnPoints;
     
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-    public Transform GetSpawnPoint(int index)
+    public Transform GetRandomSpawnPoint()
     {
-        return spawnPoints[index % spawnPoints.Length].transform;
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        return spawnPoints[randomIndex];
     }
 }
