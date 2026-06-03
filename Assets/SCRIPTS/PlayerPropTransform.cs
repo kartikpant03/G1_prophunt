@@ -46,7 +46,7 @@ public class PlayerPropTransform : NetworkBehaviour
             if (Physics.Raycast(propRay, out RaycastHit propHit, 5f))
             {
                 GameObject newProp = propHit.collider.gameObject;
-                if (newProp.layer == LayerMask.NameToLayer("Prop"))
+                if (newProp.layer == LayerMask.NameToLayer("Props"))
                 {
                     if (characterModel.activeInHierarchy)
                     {
@@ -68,13 +68,9 @@ public class PlayerPropTransform : NetworkBehaviour
         if (Keyboard.current.vKey.wasPressedThisFrame)
         {
             if (playerFPPCamera.enabled)
-            {
                 EnableTPPCamera(true);
-            }
             else
-            {
                 EnableFPPCamera(true);
-            }
         }
     }
     private void UpdateCharacterController(PropObject propDetails)

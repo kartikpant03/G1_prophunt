@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -27,18 +28,26 @@ public class JoinedPlayerList : MonoBehaviour
             return;
         }
         Instance = this;
+        
     }
     private void Start()
     {
         readyButton.onClick.AddListener(UpdateReadyButton);
-        GameManager.Instance.playerReadyList.OnListChanged += OnReadyListChanged;
         isReady = false;
         UpdateReadyButton();
+        StartCoroutine(WaitForGameManager());
+    }
+    private IEnumerator WaitForGameManager()
+    {
+        while (!GameManager.Instance.IsInitialized)
+            yield return null;
+
+        GameManager.Instance.playerReadyList.OnListChanged += OnReadyListChanged;
+
     }
 
     private void OnDestroy()
     {
-        if (GameManager.Instance != null)
             GameManager.Instance.playerReadyList.OnListChanged -= OnReadyListChanged;
     }
     private void Update()

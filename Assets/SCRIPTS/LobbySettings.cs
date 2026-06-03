@@ -277,6 +277,7 @@ public class LobbySettings : MonoBehaviour
             NetworkManager.Singleton.Shutdown();
 
             SceneLoader.Load(SceneLoader.Scene.LobbyScene);
+            GameManager.Instance.ResetLobby();
 
             await VivoxChat.Instance.LeaveVivoxRoom(joinedLobby.Name);
             VivoxChat.Instance.currentRoomName = "Lobby";

@@ -9,6 +9,7 @@ public class GameManager : NetworkBehaviour
     [NonSerialized] public NetworkVariable<MatchState> currentState = new(MatchState.Warmup);
     private NetworkVariable<float> countdownTimer = new(10f);
     public NetworkList<PlayerReadyData> playerReadyList;
+    public bool IsInitialized;
 
     public enum MatchState
     {
@@ -29,28 +30,29 @@ public class GameManager : NetworkBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+        IsInitialized = false;
         playerReadyList = new NetworkList<PlayerReadyData>();
     }
     public override void OnNetworkSpawn()
     {
         if (IsServer)
         {
-            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            Debug.Log("Player List Initialized");
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+            IsInitialized = true;
         }
     }
     public override void OnNetworkDespawn()
     {
         if (IsServer)
         {
-            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
         }
     }
-
     private void Update()
     {
-        if (!IsServer) return;
+        if (!IsHost) return;
 
         if (currentState.Value == MatchState.Countdown)
         {
@@ -58,18 +60,6 @@ public class GameManager : NetworkBehaviour
             if (countdownTimer.Value <= 0)
                 StartMatch();
         }
-    }
-    private void OnClientConnected(ulong clientId)
-    {
-        PlayerReadyData data = new()
-        {
-            clientId = clientId,
-            playerName = "Player " + clientId,
-            isReady = false
-        };
-
-        playerReadyList.Add(data);
-        JoinedPlayerList.Instance.UpdatePlayerReadyListUI();
     }
 
     private void OnClientDisconnected(ulong clientId)
@@ -81,18 +71,21 @@ public class GameManager : NetworkBehaviour
                 break;
             }
     }
-    public void UpdatePlayerName(ulong clientId, string newName)
+    public void AddPlayerData(ulong clientId, string newName)
     {
-        for (int i = 0; i < playerReadyList.Count; i++)
+        foreach (var player in playerReadyList)
+            if (player.clientId == clientId)
+                return;
+
+        PlayerReadyData data = new ()
         {
-            PlayerReadyData data = playerReadyList[i];
-            if (data.clientId == clientId)
-            {
-                data.playerName = newName;
-                playerReadyList[i] = data;
-                break;
-            }
-        }
+            playerName = newName,
+            clientId = clientId,
+            isReady = false
+        };
+        Debug.Log($"AddPlayerData called. IsSpawned={IsSpawned}");
+        playerReadyList.Add(data);
+        Debug.Log($"AddPlayerData called. IsSpawned={IsSpawned}");
     }
     [Rpc(SendTo.Server)] public void ToggleReadyServerRpc(RpcParams rpcParams = default)
     {
@@ -111,7 +104,6 @@ public class GameManager : NetworkBehaviour
                 break;
             }
         
-        JoinedPlayerList.Instance.UpdatePlayerReadyListUI();
         CheckAllPlayersReady();
     }
     private void CheckAllPlayersReady()
@@ -122,10 +114,8 @@ public class GameManager : NetworkBehaviour
                 StopCountdown();
                 return;
             } 
-            else
-            {
-                StartCountdown();
-            }     
+
+        StartCountdown();    
     }
     private void StartCountdown()
     {
@@ -159,13 +149,14 @@ public class GameManager : NetworkBehaviour
     {
         
     }
-    public bool IsPlayerReady(ulong clientId)
+    public void ResetLobby()
     {
-        for (int i = 0; i < playerReadyList.Count; i++)
-            if (playerReadyList[i].clientId == clientId)
-                return playerReadyList[i].isReady;
+        playerReadyList.Clear();
 
-        return false;
+        currentState.Value = MatchState.Warmup;
+        countdownTimer.Value = 10f;
+
+        countdownStarted = false;
     }
     public MatchState GetMatchState()
     {

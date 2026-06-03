@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -33,16 +34,21 @@ public class PlayerData : NetworkBehaviour
 
         if (IsOwner)
         {
-            string savedName = PlayerPrefs.GetString("PlayerName", "Player");
-            SetPlayerNameServerRpc(savedName);
+            StartCoroutine(WaitForGameManager());
         }
 
         nameText.text = playerName.Value.ToString();
     }
-    private void Update()
+    private IEnumerator WaitForGameManager()
     {
-        if (!IsOwner) return;
+        while (!GameManager.Instance.IsInitialized)
+            yield return null;
+
+        string savedName = PlayerPrefs.GetString("PlayerName", "Player");
+        SetPlayerNameServerRpc(savedName);
+
     }
+    
     private void OnPlayerNameChanged(FixedString64Bytes oldValue, FixedString64Bytes newValue)
     {
         nameText.text = newValue.ToString();
@@ -51,6 +57,7 @@ public class PlayerData : NetworkBehaviour
     void SetPlayerNameServerRpc(string name)
     {
         playerName.Value = name;
-        GameManager.Instance.UpdatePlayerName(OwnerClientId, name);
+        Debug.Log("Adding Player Data: " + OwnerClientId + " with Name: " + name + "to the Network List");
+        GameManager.Instance.AddPlayerData(OwnerClientId, name);
     }
 }

@@ -7,6 +7,8 @@ public class CharacterAnimation : NetworkBehaviour
 
     private InputSystem_Actions inputActions;
     public Animator animator;
+    private float verticalVelocity;
+    private bool isGrounded;
 
     public void ActivateLobbyAnimation()
     {
@@ -18,6 +20,7 @@ public class CharacterAnimation : NetworkBehaviour
         animator.SetLayerWeight(0, 0f);
         animator.SetLayerWeight(1, 1f);
     }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -50,6 +53,15 @@ public class CharacterAnimation : NetworkBehaviour
     {
         if (!IsOwner) return;
 
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
+        {
+            if (hit.collider.CompareTag("Ground"))
+                isGrounded = true;
+            else 
+                isGrounded = false;
+        }
+
         Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
 
         float speed = moveInput.y * 2f;
@@ -65,11 +77,20 @@ public class CharacterAnimation : NetworkBehaviour
             speed = speed / 2;
             strafe = strafe / 2;
         }
+        if (inputActions.Player.Jump.WasPressedThisFrame())
+        {
+            animator.SetBool("IsJumping", true);
+            verticalVelocity = Mathf.Sqrt(1f * -2f * 10f);
+        }
+        if (isGrounded)
+        {
+            animator.SetBool("IsJumping", false);
+        }
 
         currentSpeed = animator.GetFloat("Move");
-        animator.SetFloat("Move", Mathf.Lerp(currentSpeed, speed, Time.deltaTime * 20f));
+        animator.SetFloat("Move", Mathf.Lerp(currentSpeed, speed, Time.deltaTime * 15f));
         currentStrafe = animator.GetFloat("Strafe");
-        animator.SetFloat("Strafe", Mathf.Lerp(currentStrafe, strafe, Time.deltaTime * 15f));
+        animator.SetFloat("Strafe", Mathf.Lerp(currentStrafe, strafe, Time.deltaTime * 10f));
     }
     private void SetLayer(GameObject obj, int newLayer)
     {
