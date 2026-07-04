@@ -375,6 +375,7 @@ MonoBehaviour:
   controllerHeight: 0
   controllerWidth: 0
   controllerCentre: {x: 0, y: 0, z: 0}
+  propPrefab: {fileID: 470616486}
 --- !u!1 &632844176
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +402,7 @@ Transform:
   m_GameObject: {fileID: 632844176}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 109.68, y: 13, z: 117.965}
+  m_LocalPosition: {x: 109.68, y: 22.18, z: 117.965}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -611,6 +612,7 @@ Terrain:
   m_AllowAutoConnect: 1
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
+  m_EnableHeightmapLODFrustumCulling: 1
   m_TreeMotionVectorModeOverride: 0
 --- !u!1 &1272713088
 GameObject:
@@ -821,6 +823,7 @@ MonoBehaviour:
   controllerHeight: 0
   controllerWidth: 0
   controllerCentre: {x: 0, y: 0, z: 0}
+  propPrefab: {fileID: 1437628415}
 --- !u!1 &1563638450
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +833,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1563638451}
+  - component: {fileID: 1563638452}
   m_Layer: 7
   m_Name: Props
   m_TagString: Untagged
@@ -854,6 +858,21 @@ Transform:
   - {fileID: 1437628416}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1563638452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563638450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d15a82eac507e48ba05acd9a5b8c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  props:
+  - {fileID: 470616491}
+  - {fileID: 1437628420}
 --- !u!1 &1790280366
 GameObject:
   m_ObjectHideFlags: 0

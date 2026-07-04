@@ -26,8 +26,11 @@ public class PlayerData : NetworkBehaviour
 {
     public TMPro.TextMeshProUGUI nameText;
     public NetworkVariable<FixedString64Bytes> playerName = new ();
+    public NetworkVariable<int> CurrentPropId = new(-1);
+    public NetworkVariable<int> CurrentCharacterId = new(0);
+    public NetworkVariable<bool> IsProp = new(false);
+    public NetworkVariable<float> Health = new(100f);
 
-    public static PlayerData Instance { get; private set; }
     public override void OnNetworkSpawn()
     {
         playerName.OnValueChanged += OnPlayerNameChanged;

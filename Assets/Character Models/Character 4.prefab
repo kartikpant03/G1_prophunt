@@ -2372,8 +2372,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8671182580309005577}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.976296, z: 0, w: 0.2164397}
-  m_LocalPosition: {x: 0, y: -1.06, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2384,7 +2384,7 @@ Transform:
   - {fileID: 1230362828312122332}
   - {fileID: 9036876833472755280}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -155, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5287116065361632361
 Animator:
   serializedVersion: 7
@@ -2423,7 +2423,14 @@ MonoBehaviour:
   NetworkAnimatorExpanded: 0
   AuthorityMode: 0
   m_Animator: {fileID: 5287116065361632361}
-  TransitionStateInfoList: []
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 1
+    OriginatingState: -453240694
+    DestinationState: -1711297029
+    TransitionDuration: 0.25
+    TriggerNameHash: 113680519
+    TransitionIndex: 1
   AnimatorParameterEntries:
     ParameterEntries:
     - name: Move
@@ -2434,6 +2441,18 @@ MonoBehaviour:
       NameHash: -1311372029
       Synchronize: 1
       ParameterType: 1
+    - name: Jump
+      NameHash: 125937960
+      Synchronize: 1
+      ParameterType: 1
+    - name: Crouch
+      NameHash: -2015693266
+      Synchronize: 1
+      ParameterType: 1
+    - name: JumpTrigger
+      NameHash: 113680519
+      Synchronize: 1
+      ParameterType: 9
   AnimatorParametersExpanded: 0
 --- !u!1 &8748350513462518137
 GameObject:

@@ -19,14 +19,19 @@ public class MultiplayerMovement : NetworkBehaviour
     [SerializeField] private float runSpeed = 5f;
     [SerializeField] private float walkSpeed = 2f;
 
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Vector3 groundCheckSize = new Vector3(0.2f, 0.05f, 0.2f);
+    [SerializeField] private LayerMask groundMask;
+
     private MultiplayerMovement movementScript;
     private CharacterController controller;
 
-    private const float stickDistance = 2f;
-    private const float offsetAboveGround = 1.5f;
     private float xRotation = 0f;
     private float yRotation = 0f;
     private bool isCursorLocked = true;
+    private float gravity = -9.81f;
+    private float verticalVelocity = 0f;
+    private bool isGrounded = false;
 
     private CinemachineInputAxisController camController;
     private InputSystem_Actions inputActions;
@@ -34,7 +39,7 @@ public class MultiplayerMovement : NetworkBehaviour
     private Vector2 lookInput;
    
     private void Awake()
-    {        
+    {
         movementScript = GetComponent<MultiplayerMovement>();
         inputActions = new InputSystem_Actions();
 
@@ -72,18 +77,16 @@ public class MultiplayerMovement : NetworkBehaviour
         SetSensitivity();
 
         foreach (var controller in camController.Controllers)
-        {
             if (controller.Name == "Look Orbit Y")
-            {
-                Debug.Log("Look Orbit Y found");
-                controller.Input.InputAction = InputActionReference.Create(inputActions.Player.Look);
-            }
-        } 
+                controller.Input.InputAction = InputActionReference.Create(inputActions.Player.Look); 
     }
     private void Update()
     {
         if (IsOwner)
         {
+            if (isGrounded && verticalVelocity <= 0f)
+                 verticalVelocity = -2f;
+
             if (isCursorLocked)
             {
                 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
@@ -91,7 +94,16 @@ public class MultiplayerMovement : NetworkBehaviour
 
                 PlayerMovement();       // (currently client sided)
                 CameraMovement();
+
+                isGrounded = Physics.CheckBox(groundCheck.position, groundCheckSize, Quaternion.identity, groundMask);
+
+                if (inputActions.Player.Jump.WasPressedThisFrame())
+                    if (isGrounded)
+                        verticalVelocity = Mathf.Sqrt(-3f * gravity);
             }
+            
+            controller.Move(verticalVelocity * Vector2.up * Time.deltaTime);
+            verticalVelocity += gravity * Time.deltaTime;
 
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
             {
@@ -106,17 +118,16 @@ public class MultiplayerMovement : NetworkBehaviour
                     JoinedLobby.Instance.gameObject.SetActive(false);
                 }
             }
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, Vector3.down, out hit, stickDistance))
-            {
-                if (hit.collider.CompareTag("Ground"))
-                {
-                    Vector3 pos = transform.position;
-                    pos.y = hit.point.y + offsetAboveGround;
-                    transform.position = pos;
-                }
-            }
         }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        if (groundCheck == null)
+            return;
+
+        Gizmos.color = isGrounded ? Color.green : Color.red;
+        Gizmos.matrix = Matrix4x4.TRS(groundCheck.position, groundCheck.rotation, Vector3.one);
+        Gizmos.DrawWireCube(Vector3.zero, groundCheckSize * 2f);
     }
     private void LockCursor()
     {
@@ -135,12 +146,8 @@ public class MultiplayerMovement : NetworkBehaviour
     public void SetSensitivity()
     {
         foreach (var controller in camController.Controllers)
-        {
             if (controller.Name == "Look Orbit Y")
-            {
                 controller.Input.Gain = -ySensitivity;
-            }
-        }
     }
     private void CameraMovement()
     {

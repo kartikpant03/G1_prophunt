@@ -140,6 +140,7 @@ public class GameManager : NetworkBehaviour
 
         AssignHunters();
         AssignHiders();
+        
     }
     private void AssignHunters()
     {

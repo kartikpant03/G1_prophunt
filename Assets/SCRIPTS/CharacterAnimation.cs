@@ -7,19 +7,12 @@ public class CharacterAnimation : NetworkBehaviour
 
     private InputSystem_Actions inputActions;
     public Animator animator;
-    private float verticalVelocity;
-    private bool isGrounded;
 
-    public void ActivateLobbyAnimation()
-    {
-        animator.SetLayerWeight(0, 1f);
-        animator.SetLayerWeight(1, 0f);
-    }
-    public void ActivateMovementAnimation()
-    {
-        animator.SetLayerWeight(0, 0f);
-        animator.SetLayerWeight(1, 1f);
-    }
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Vector3 groundCheckSize = new Vector3(0.2f, 0.05f, 0.2f);
+    [SerializeField] private LayerMask groundMask;
+
+    private bool isGrounded = false;
 
     private void Awake()
     {
@@ -53,14 +46,8 @@ public class CharacterAnimation : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
-        {
-            if (hit.collider.CompareTag("Ground"))
-                isGrounded = true;
-            else 
-                isGrounded = false;
-        }
+        if (animator == null)
+            return;
 
         Vector2 moveInput = inputActions.Player.Move.ReadValue<Vector2>();
 
@@ -77,20 +64,18 @@ public class CharacterAnimation : NetworkBehaviour
             speed = speed / 2;
             strafe = strafe / 2;
         }
+
+        isGrounded = Physics.CheckBox(groundCheck.position, groundCheckSize, Quaternion.identity, groundMask);
+
         if (inputActions.Player.Jump.WasPressedThisFrame())
-        {
-            animator.SetBool("IsJumping", true);
-            verticalVelocity = Mathf.Sqrt(1f * -2f * 10f);
-        }
-        if (isGrounded)
-        {
-            animator.SetBool("IsJumping", false);
-        }
+            if (isGrounded)
+                animator.SetTrigger("JumpTrigger");
 
         currentSpeed = animator.GetFloat("Move");
         animator.SetFloat("Move", Mathf.Lerp(currentSpeed, speed, Time.deltaTime * 15f));
         currentStrafe = animator.GetFloat("Strafe");
         animator.SetFloat("Strafe", Mathf.Lerp(currentStrafe, strafe, Time.deltaTime * 10f));
+        animator.SetFloat("Jump", ((speed + 2f) / 4f));
     }
     private void SetLayer(GameObject obj, int newLayer)
     {
